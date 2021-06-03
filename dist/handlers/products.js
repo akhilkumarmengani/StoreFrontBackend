@@ -64,7 +64,6 @@ var create = function (req, res) { return __awaiter(void 0, void 0, void 0, func
                     price: parseInt(req.body.price),
                     category: req.body.category
                 };
-                console.log(product);
                 return [4 /*yield*/, store.create(product)];
             case 1:
                 newProduct = _a.sent();
@@ -93,7 +92,6 @@ var getProductsByCategory = function (req, res) { return __awaiter(void 0, void 
         switch (_a.label) {
             case 0:
                 category = req.params.category;
-                console.log(category);
                 return [4 /*yield*/, store.getProductsByCategory(category)];
             case 1:
                 user = _a.sent();

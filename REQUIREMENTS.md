@@ -18,7 +18,7 @@ These are the notes from a meeting with the frontend developer that describe wha
 
 #### Orders
 - Current Order by user (args: user id)[token required] '/orders/users/:user_id' [GET]
-- [OPTIONAL] Completed Orders by user (args: user id)[token required] : '/orders/users/:id/orders-completed'
+- [OPTIONAL] Completed Orders by user (args: user id)[token required] : '/orders/users/:id/orders-completed' [GET]
 ## Data Shapes
 #### Product
 -  id 

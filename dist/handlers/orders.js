@@ -65,7 +65,6 @@ var create = function (req, res) { return __awaiter(void 0, void 0, void 0, func
                     userId: parseInt(req.body.userId),
                     status: req.body.status,
                 };
-                console.log(order);
                 return [4 /*yield*/, store.create(order)];
             case 1:
                 newOrder = _a.sent();

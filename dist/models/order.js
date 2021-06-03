@@ -120,9 +120,33 @@ var OrderStore = /** @class */ (function () {
             });
         });
     };
-    OrderStore.prototype.update = function (order) {
+    OrderStore.prototype.delete = function (id) {
         return __awaiter(this, void 0, void 0, function () {
             var sql, conn, result, err_4;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        _a.trys.push([0, 3, , 4]);
+                        sql = 'DELETE orders WHERE id=($1) RETURNING *';
+                        return [4 /*yield*/, database_1.default.connect()];
+                    case 1:
+                        conn = _a.sent();
+                        return [4 /*yield*/, conn.query(sql, [id])];
+                    case 2:
+                        result = _a.sent();
+                        conn.release();
+                        return [2 /*return*/, result.rows[0]];
+                    case 3:
+                        err_4 = _a.sent();
+                        throw new Error("Could not order user " + id + ". Error: " + err_4);
+                    case 4: return [2 /*return*/];
+                }
+            });
+        });
+    };
+    OrderStore.prototype.update = function (order) {
+        return __awaiter(this, void 0, void 0, function () {
+            var sql, conn, result, err_5;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -137,8 +161,8 @@ var OrderStore = /** @class */ (function () {
                         conn.release();
                         return [2 /*return*/, result.rows[0]];
                     case 3:
-                        err_4 = _a.sent();
-                        throw new Error("Could not find orders for user id " + order.userId + ". Error: " + err_4);
+                        err_5 = _a.sent();
+                        throw new Error("Could not find orders for user id " + order.userId + ". Error: " + err_5);
                     case 4: return [2 /*return*/];
                 }
             });
@@ -146,7 +170,7 @@ var OrderStore = /** @class */ (function () {
     };
     OrderStore.prototype.currentOrders = function (userId) {
         return __awaiter(this, void 0, void 0, function () {
-            var status_1, sql, conn, result, err_5;
+            var status_1, sql, conn, result, err_6;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -162,8 +186,8 @@ var OrderStore = /** @class */ (function () {
                         conn.release();
                         return [2 /*return*/, result.rows];
                     case 3:
-                        err_5 = _a.sent();
-                        throw new Error("Could not find orders for user id " + userId + ". Error: " + err_5);
+                        err_6 = _a.sent();
+                        throw new Error("Could not find orders for user id " + userId + ". Error: " + err_6);
                     case 4: return [2 /*return*/];
                 }
             });
@@ -171,7 +195,7 @@ var OrderStore = /** @class */ (function () {
     };
     OrderStore.prototype.completedOrders = function (userId) {
         return __awaiter(this, void 0, void 0, function () {
-            var status_2, sql, conn, result, err_6;
+            var status_2, sql, conn, result, err_7;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -187,8 +211,8 @@ var OrderStore = /** @class */ (function () {
                         conn.release();
                         return [2 /*return*/, result.rows];
                     case 3:
-                        err_6 = _a.sent();
-                        throw new Error("Could not find orders for user id " + userId + ". Error: " + err_6);
+                        err_7 = _a.sent();
+                        throw new Error("Could not find orders for user id " + userId + ". Error: " + err_7);
                     case 4: return [2 /*return*/];
                 }
             });

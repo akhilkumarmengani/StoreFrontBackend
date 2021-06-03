@@ -50,20 +50,23 @@ describe('User Model Test', function () {
     it('Create User Test', function () {
         expect(userStore.create).toBeDefined();
     });
-    it('Creating User Test'), function () { return __awaiter(void 0, void 0, void 0, function () {
-        var userDetails, result;
+    it('Delete User Test', function () {
+        expect(userStore.delete).toBeDefined();
+    });
+    it('Show all users', function () { return __awaiter(void 0, void 0, void 0, function () {
+        var userId, result;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
-                    userDetails = { firstName: 'Akhil', lastName: 'Kumar', password: '1234' };
-                    return [4 /*yield*/, userStore.create(userDetails)];
+                    userId = 1;
+                    return [4 /*yield*/, userStore.index()];
                 case 1:
                     result = _a.sent();
-                    expect(result).toBeDefined();
+                    expect(result[0].id).toEqual(1);
                     return [2 /*return*/];
             }
         });
-    }); };
+    }); });
     it('Retrieving User By Id Test', function () { return __awaiter(void 0, void 0, void 0, function () {
         var userId, result;
         return __generator(this, function (_a) {
@@ -90,18 +93,23 @@ describe('Order Model Test', function () {
     it('Create Order Test', function () {
         expect(orderStore.create).toBeDefined();
     });
-    it('Creating Order Test'), function () { return __awaiter(void 0, void 0, void 0, function () {
-        var result;
+    it('Delete Order Test', function () {
+        expect(orderStore.delete).toBeDefined();
+    });
+    it('Show current orders', function () { return __awaiter(void 0, void 0, void 0, function () {
+        var userId, result;
         return __generator(this, function (_a) {
             switch (_a.label) {
-                case 0: return [4 /*yield*/, orderStore.create({ productId: 1, userId: 1, quantity: 10, status: 'COMPLETE' })];
+                case 0:
+                    userId = 1;
+                    return [4 /*yield*/, orderStore.currentOrders(userId)];
                 case 1:
                     result = _a.sent();
-                    expect(result).toBeDefined();
+                    expect(result[0].status).toEqual('ACTIVE');
                     return [2 /*return*/];
             }
         });
-    }); };
+    }); });
     it('Retrieving Order By Id Test', function () { return __awaiter(void 0, void 0, void 0, function () {
         var orderId, order;
         return __generator(this, function (_a) {
@@ -128,18 +136,23 @@ describe('Product Model Test', function () {
     it('Create Product Test', function () {
         expect(productStore.create).toBeDefined();
     });
-    it('Creating User Test'), function () { return __awaiter(void 0, void 0, void 0, function () {
-        var result;
+    it('Delete Product Test', function () {
+        expect(productStore.delete).toBeDefined();
+    });
+    it('Show all products', function () { return __awaiter(void 0, void 0, void 0, function () {
+        var userId, result;
         return __generator(this, function (_a) {
             switch (_a.label) {
-                case 0: return [4 /*yield*/, productStore.create({ name: 'Nokia', price: 10, category: 'TV' })];
+                case 0:
+                    userId = 1;
+                    return [4 /*yield*/, productStore.index()];
                 case 1:
                     result = _a.sent();
-                    expect(result).toBeDefined();
+                    expect(result[0].id).toEqual(1);
                     return [2 /*return*/];
             }
         });
-    }); };
+    }); });
     it('Retrieving Product By Id Test', function () { return __awaiter(void 0, void 0, void 0, function () {
         var productId, product;
         return __generator(this, function (_a) {

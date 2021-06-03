@@ -67,7 +67,6 @@ var UserStore = /** @class */ (function () {
                         return [4 /*yield*/, conn.query(sql)];
                     case 3:
                         result = _a.sent();
-                        console.log(result.rowCount);
                         conn.release();
                         return [2 /*return*/, result.rows];
                     case 4:
@@ -96,7 +95,6 @@ var UserStore = /** @class */ (function () {
                     case 3:
                         result = _a.sent();
                         newUser = result.rows[0];
-                        console.log("User - " + newUser);
                         conn.release();
                         userId = result.rows[0].id;
                         authToken = generateAuthToken(userId.toString());
@@ -133,9 +131,33 @@ var UserStore = /** @class */ (function () {
             });
         });
     };
+    UserStore.prototype.delete = function (id) {
+        return __awaiter(this, void 0, void 0, function () {
+            var sql, conn, result, err_4;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        _a.trys.push([0, 3, , 4]);
+                        sql = 'DELETE users WHERE id=($1) RETURNING *';
+                        return [4 /*yield*/, database_1.default.connect()];
+                    case 1:
+                        conn = _a.sent();
+                        return [4 /*yield*/, conn.query(sql, [id])];
+                    case 2:
+                        result = _a.sent();
+                        conn.release();
+                        return [2 /*return*/, result.rows[0]];
+                    case 3:
+                        err_4 = _a.sent();
+                        throw new Error("Could not delete user " + id + ". Error: " + err_4);
+                    case 4: return [2 /*return*/];
+                }
+            });
+        });
+    };
     UserStore.prototype.authenticate = function (userId, password) {
         return __awaiter(this, void 0, void 0, function () {
-            var conn, sql, result, user, err_4;
+            var conn, sql, result, user, err_5;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -147,22 +169,17 @@ var UserStore = /** @class */ (function () {
                         return [4 /*yield*/, conn.query(sql, [userId])];
                     case 2:
                         result = _a.sent();
-                        console.log(password + pepper);
                         if (result.rows.length > 0) {
                             user = result.rows[0];
-                            console.log('User Found : ' + user);
                             if (bcrypt_1.default.compareSync(password + pepper, user.password)) {
-                                console.log('return user');
                                 return [2 /*return*/, user];
                             }
                         }
                         return [3 /*break*/, 4];
                     case 3:
-                        err_4 = _a.sent();
-                        throw new Error("Authenticate Error: " + err_4);
-                    case 4:
-                        console.log('null user');
-                        return [2 /*return*/, null];
+                        err_5 = _a.sent();
+                        throw new Error("Authenticate Error: " + err_5);
+                    case 4: return [2 /*return*/, null];
                 }
             });
         });

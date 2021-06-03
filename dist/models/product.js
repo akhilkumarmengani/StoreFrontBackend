@@ -93,9 +93,33 @@ var ProductStore = /** @class */ (function () {
             });
         });
     };
-    ProductStore.prototype.create = function (product) {
+    ProductStore.prototype.delete = function (id) {
         return __awaiter(this, void 0, void 0, function () {
             var sql, conn, result, err_3;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        _a.trys.push([0, 3, , 4]);
+                        sql = 'DELETE products WHERE id=($1) RETURNING *';
+                        return [4 /*yield*/, database_1.default.connect()];
+                    case 1:
+                        conn = _a.sent();
+                        return [4 /*yield*/, conn.query(sql, [id])];
+                    case 2:
+                        result = _a.sent();
+                        conn.release();
+                        return [2 /*return*/, result.rows[0]];
+                    case 3:
+                        err_3 = _a.sent();
+                        throw new Error("Could not delete product " + id + ". Error: " + err_3);
+                    case 4: return [2 /*return*/];
+                }
+            });
+        });
+    };
+    ProductStore.prototype.create = function (product) {
+        return __awaiter(this, void 0, void 0, function () {
+            var sql, conn, result, err_4;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -112,8 +136,8 @@ var ProductStore = /** @class */ (function () {
                         conn.release();
                         return [2 /*return*/, result.rows[0]];
                     case 4:
-                        err_3 = _a.sent();
-                        throw new Error('CREATE Error - ' + err_3);
+                        err_4 = _a.sent();
+                        throw new Error('CREATE Error - ' + err_4);
                     case 5: return [2 /*return*/];
                 }
             });
@@ -121,7 +145,7 @@ var ProductStore = /** @class */ (function () {
     };
     ProductStore.prototype.getProductsByCategory = function (category) {
         return __awaiter(this, void 0, void 0, function () {
-            var sql, conn, result, err_4;
+            var sql, conn, result, err_5;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -136,8 +160,8 @@ var ProductStore = /** @class */ (function () {
                         conn.release();
                         return [2 /*return*/, result.rows];
                     case 3:
-                        err_4 = _a.sent();
-                        throw new Error("Could not find products with " + category + ". Error: " + err_4);
+                        err_5 = _a.sent();
+                        throw new Error("Could not find products with " + category + ". Error: " + err_5);
                     case 4: return [2 /*return*/];
                 }
             });

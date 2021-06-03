@@ -65,7 +65,6 @@ var create = function (req, res) { return __awaiter(void 0, void 0, void 0, func
                     lastName: req.body.lastname,
                     password: req.body.password
                 };
-                console.log(user);
                 return [4 /*yield*/, store.create(user)];
             case 1:
                 token = _a.sent();
@@ -119,7 +118,7 @@ var authenticate = function (req, res) { return __awaiter(void 0, void 0, void 0
     });
 }); };
 var user_routes = function (app) {
-    console.log("Here...");
+    console.log("In user routes...");
     app.get('/users/:id/authenticate', authenticate);
     app.get('/users', authentication_1.default, index);
     app.post('/users', authentication_1.default, create);
