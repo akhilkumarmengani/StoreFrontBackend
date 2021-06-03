@@ -51,10 +51,12 @@ describe('User Model Test', function () {
         expect(userStore.create).toBeDefined();
     });
     it('Creating User Test'), function () { return __awaiter(void 0, void 0, void 0, function () {
-        var result;
+        var userDetails, result;
         return __generator(this, function (_a) {
             switch (_a.label) {
-                case 0: return [4 /*yield*/, userStore.create({ firstName: 'Akhil', lastName: 'Kumar', password: '1234' })];
+                case 0:
+                    userDetails = { firstName: 'Akhil', lastName: 'Kumar', password: '1234' };
+                    return [4 /*yield*/, userStore.create(userDetails)];
                 case 1:
                     result = _a.sent();
                     expect(result).toBeDefined();
@@ -78,17 +80,17 @@ describe('User Model Test', function () {
     }); });
 });
 var orderStore = new order_1.OrderStore();
-describe('Product Model Test', function () {
-    it('Get All Products Test', function () {
+describe('Order Model Test', function () {
+    it('Get All Orders Test', function () {
         expect(orderStore.index).toBeDefined();
     });
-    it('Get Product By ProductId Test', function () {
+    it('Get Order By OrderId Test', function () {
         expect(orderStore.show).toBeDefined();
     });
-    it('Create Product Test', function () {
+    it('Create Order Test', function () {
         expect(orderStore.create).toBeDefined();
     });
-    it('Creating User Test'), function () { return __awaiter(void 0, void 0, void 0, function () {
+    it('Creating Order Test'), function () { return __awaiter(void 0, void 0, void 0, function () {
         var result;
         return __generator(this, function (_a) {
             switch (_a.label) {
@@ -100,7 +102,7 @@ describe('Product Model Test', function () {
             }
         });
     }); };
-    it('Retrieving Product By Id Test', function () { return __awaiter(void 0, void 0, void 0, function () {
+    it('Retrieving Order By Id Test', function () { return __awaiter(void 0, void 0, void 0, function () {
         var orderId, order;
         return __generator(this, function (_a) {
             switch (_a.label) {

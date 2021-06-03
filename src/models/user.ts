@@ -40,11 +40,11 @@ export class UserStore{
         const sql = 'INSERT INTO users(firstName,lastName,password) VALUES($1,$2,$3) RETURNING *';
         try{
             const conn = await Client.connect();
-            const hash = bcrypt.hashSync(
+            const hash =  bcrypt.hashSync(
                 user.password + pepper, 
                 parseInt(saltRounds)
               );
-            const result : QueryResult = await conn.query(sql,[user.firstName,user.lastName,hash]);
+            const result = await conn.query(sql,[user.firstName,user.lastName,hash]);
             const newUser = result.rows[0];
             console.log("User - " + newUser);
             conn.release();

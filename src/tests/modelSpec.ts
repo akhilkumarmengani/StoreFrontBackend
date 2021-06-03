@@ -18,7 +18,8 @@ describe('User Model Test', ()=>{
       });
 
       it('Creating User Test'), async () =>{
-          const result = await userStore.create({firstName : 'Akhil', lastName : 'Kumar', password : '1234'});
+          const userDetails = {firstName : 'Akhil', lastName : 'Kumar', password : '1234'};
+          const result = await userStore.create(userDetails);
           expect(result).toBeDefined();
       }
 
@@ -31,25 +32,25 @@ describe('User Model Test', ()=>{
 
 const orderStore : OrderStore = new OrderStore();
 
-describe('Product Model Test', ()=>{
-    it('Get All Products Test', () => {
+describe('Order Model Test', ()=>{
+    it('Get All Orders Test', () => {
         expect(orderStore.index).toBeDefined();
       });
     
-      it('Get Product By ProductId Test', () => {
+      it('Get Order By OrderId Test', () => {
         expect(orderStore.show).toBeDefined();
       });
     
-      it('Create Product Test', () => {
+      it('Create Order Test', () => {
         expect(orderStore.create).toBeDefined();
       });
 
-      it('Creating User Test'), async () =>{
+      it('Creating Order Test'), async () =>{
           const result = await orderStore.create({productId : 1, userId : 1, quantity : 10 , status : 'COMPLETE'});
           expect(result).toBeDefined();
       }
 
-      it('Retrieving Product By Id Test', async ()=>{
+      it('Retrieving Order By Id Test', async ()=>{
         const orderId : number = 1;
         const order : Order = await orderStore.show(orderId);
         expect(order.id).toEqual(orderId);

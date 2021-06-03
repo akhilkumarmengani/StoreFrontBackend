@@ -146,17 +146,17 @@ var OrderStore = /** @class */ (function () {
     };
     OrderStore.prototype.currentOrders = function (userId) {
         return __awaiter(this, void 0, void 0, function () {
-            var status, sql, conn, result, err_5;
+            var status_1, sql, conn, result, err_5;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
                         _a.trys.push([0, 3, , 4]);
-                        status = 'ACTIVE';
+                        status_1 = 'ACTIVE';
                         sql = 'SELECT * FROM orders WHERE user_id=($1) and status = ($2) ';
                         return [4 /*yield*/, database_1.default.connect()];
                     case 1:
                         conn = _a.sent();
-                        return [4 /*yield*/, conn.query(sql, [userId, status])];
+                        return [4 /*yield*/, conn.query(sql, [userId, status_1])];
                     case 2:
                         result = _a.sent();
                         conn.release();
@@ -171,17 +171,17 @@ var OrderStore = /** @class */ (function () {
     };
     OrderStore.prototype.completedOrders = function (userId) {
         return __awaiter(this, void 0, void 0, function () {
-            var status, sql, conn, result, err_6;
+            var status_2, sql, conn, result, err_6;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
                         _a.trys.push([0, 3, , 4]);
-                        status = 'COMPLETE';
+                        status_2 = 'COMPLETE';
                         sql = 'SELECT * FROM orders WHERE user_id=($1) and status = ($2) ';
                         return [4 /*yield*/, database_1.default.connect()];
                     case 1:
                         conn = _a.sent();
-                        return [4 /*yield*/, conn.query(sql, [userId, status])];
+                        return [4 /*yield*/, conn.query(sql, [userId, status_2])];
                     case 2:
                         result = _a.sent();
                         conn.release();
