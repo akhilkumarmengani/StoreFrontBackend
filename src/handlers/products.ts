@@ -2,8 +2,6 @@ import express from 'express';
 import {Product, ProductStore} from '../models/product';
 import verifyAuthToken from '../middleware/authentication';
 
-type ProductRequest = { name: string, price : number , category : string };
-
 const store = new ProductStore();
 
 const index = async (req : express.Request ,res : express.Response) => {
@@ -12,7 +10,7 @@ const index = async (req : express.Request ,res : express.Response) => {
 };
 
 const create = async (req : express.Request ,res : express.Response) => {
-    const product : ProductRequest = {
+    const product : Product = {
         name : req.body.name as string,
         price : parseInt(req.body.price as string),
         category : req.body.category as string
@@ -29,11 +27,21 @@ const show = async (req : express.Request ,res : express.Response) =>{
 
 }
 
+const getProductsByCategory = async (req : express.Request ,res : express.Response) =>{
+    const category : string = req.params.category as string;
+    console.log(category)
+    const user  = await store.getProductsByCategory(category);
+    res.send(user);
+
+}
+
 const product_routes = ( app : express.Application) => {
     console.log('In product routes...');
     app.get('/products',index);
     app.post('/products',verifyAuthToken,create);
     app.get('/products/:id',show);
+    app.get('/products/category/:category',verifyAuthToken,getProductsByCategory);
+    
 }
 
 export default product_routes;

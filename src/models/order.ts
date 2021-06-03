@@ -5,11 +5,11 @@ import {User, UserStore} from './user'
 type OrderRequest = {productId : number , quantity : number , userId : number, status : string}
 
 export type Order = {
-    id : number,
+    id? : number,
     productId : number,
     quantity : number,
     userId : number,
-    status : number
+    status : string
 };
 
 export class OrderStore{

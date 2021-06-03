@@ -141,7 +141,7 @@ var order_routes = function (app) {
     app.post('/orders', authentication_1.default, create);
     app.get('/orders/:id', authentication_1.default, show);
     app.put('/orders', authentication_1.default, update);
-    app.get('/users/:user_id/current-orders', authentication_1.default, currentOrders);
-    app.get('/users/:user_id/current-orders', authentication_1.default, completedOrders);
+    app.get('/orders/users/:user_id', authentication_1.default, currentOrders);
+    app.get('/orders/users/:id/orders-completed', authentication_1.default, completedOrders);
 };
 exports.default = order_routes;

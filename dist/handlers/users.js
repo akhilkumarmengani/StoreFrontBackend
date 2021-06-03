@@ -41,6 +41,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var user_1 = require("../models/user");
 var authentication_1 = __importDefault(require("../middleware/authentication"));
+var jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 var store = new user_1.UserStore();
 var index = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
     var users;
@@ -55,20 +56,20 @@ var index = function (req, res) { return __awaiter(void 0, void 0, void 0, funct
     });
 }); };
 var create = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var user, newUser;
+    var user, token;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
                 user = {
-                    firstName: req.body.firstName,
-                    lastName: req.body.lastName,
+                    firstName: req.body.firstname,
+                    lastName: req.body.lastname,
                     password: req.body.password
                 };
                 console.log(user);
                 return [4 /*yield*/, store.create(user)];
             case 1:
-                newUser = _a.sent();
-                res.send(newUser);
+                token = _a.sent();
+                res.send(token);
                 return [2 /*return*/];
         }
     });
@@ -87,8 +88,39 @@ var show = function (req, res) { return __awaiter(void 0, void 0, void 0, functi
         }
     });
 }); };
+var authenticate = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var id, password, user, token, error_1;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                id = parseInt(req.body.id);
+                password = req.body.password;
+                _a.label = 1;
+            case 1:
+                _a.trys.push([1, 3, , 4]);
+                return [4 /*yield*/, store.authenticate(id, password)];
+            case 2:
+                user = _a.sent();
+                if (user !== null) {
+                    token = jsonwebtoken_1.default.sign(id.toString(), process.env.TOKEN_SECRET);
+                    res.json(token);
+                }
+                else {
+                    res.json("Please Sign up!");
+                }
+                return [3 /*break*/, 4];
+            case 3:
+                error_1 = _a.sent();
+                res.status(401);
+                res.json({ error: error_1 });
+                return [3 /*break*/, 4];
+            case 4: return [2 /*return*/];
+        }
+    });
+}); };
 var user_routes = function (app) {
     console.log("Here...");
+    app.get('/users/:id/authenticate', authenticate);
     app.get('/users', authentication_1.default, index);
     app.post('/users', authentication_1.default, create);
     app.get('/users/:id', authentication_1.default, show);

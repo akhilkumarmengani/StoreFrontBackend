@@ -87,10 +87,26 @@ var show = function (req, res) { return __awaiter(void 0, void 0, void 0, functi
         }
     });
 }); };
+var getProductsByCategory = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var category, user;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                category = req.params.category;
+                console.log(category);
+                return [4 /*yield*/, store.getProductsByCategory(category)];
+            case 1:
+                user = _a.sent();
+                res.send(user);
+                return [2 /*return*/];
+        }
+    });
+}); };
 var product_routes = function (app) {
     console.log('In product routes...');
     app.get('/products', index);
     app.post('/products', authentication_1.default, create);
     app.get('/products/:id', show);
+    app.get('/products/category/:category', authentication_1.default, getProductsByCategory);
 };
 exports.default = product_routes;

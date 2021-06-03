@@ -14,8 +14,8 @@ const index = async (req : express.Request ,res : express.Response) => {
 
 const create = async (req : express.Request ,res : express.Response) => {
     const user : User = {
-        firstName : req.body.firstName as string,
-        lastName : req.body.lastName as string,
+        firstName : req.body.firstname as string,
+        lastName : req.body.lastname as string,
         password : req.body.password as string
     } ;
     console.log(user);
@@ -38,7 +38,7 @@ const authenticate = async (req: express.Request, res: express.Response) => {
     try {
         const user = await store.authenticate(id, password)
         if(user !== null){
-            var token = jwt.sign(id.toString, process.env.TOKEN_SECRET as string);
+            var token = jwt.sign(id.toString(), process.env.TOKEN_SECRET as string);
             res.json(token)
         }
         else{
@@ -55,7 +55,7 @@ const user_routes = ( app : express.Application) => {
     console.log("Here...");
     app.get('/users/:id/authenticate',authenticate)
     app.get('/users',verifyAuthToken,index);
-    app.post('/users',create);
+    app.post('/users',verifyAuthToken,create);
     app.get('/users/:id',verifyAuthToken,show);
 }
 

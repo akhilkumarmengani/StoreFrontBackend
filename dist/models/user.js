@@ -41,6 +41,13 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.UserStore = void 0;
 var database_1 = __importDefault(require("../database"));
+var bcrypt_1 = __importDefault(require("bcrypt"));
+var jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
+var saltRounds = process.env.SALT_ROUNDS;
+var pepper = process.env.BCRYPT_PASSWORD;
+var generateAuthToken = function (id) {
+    return jsonwebtoken_1.default.sign(id, process.env.TOKEN_SECRET);
+};
 var UserStore = /** @class */ (function () {
     function UserStore() {
     }
@@ -73,7 +80,7 @@ var UserStore = /** @class */ (function () {
     };
     UserStore.prototype.create = function (user) {
         return __awaiter(this, void 0, void 0, function () {
-            var sql, conn, result, newUser, err_2;
+            var sql, conn, hash, result, newUser, userId, authToken, err_2;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -84,13 +91,16 @@ var UserStore = /** @class */ (function () {
                         return [4 /*yield*/, database_1.default.connect()];
                     case 2:
                         conn = _a.sent();
-                        return [4 /*yield*/, conn.query(sql, [user.firstName, user.lastName, user.password])];
+                        hash = bcrypt_1.default.hashSync(user.password + pepper, parseInt(saltRounds));
+                        return [4 /*yield*/, conn.query(sql, [user.firstName, user.lastName, hash])];
                     case 3:
                         result = _a.sent();
                         newUser = result.rows[0];
                         console.log("User - " + newUser);
                         conn.release();
-                        return [2 /*return*/, newUser];
+                        userId = result.rows[0].id;
+                        authToken = generateAuthToken(userId.toString());
+                        return [2 /*return*/, authToken];
                     case 4:
                         err_2 = _a.sent();
                         throw new Error('CREATE Error - ' + err_2);
@@ -119,6 +129,40 @@ var UserStore = /** @class */ (function () {
                         err_3 = _a.sent();
                         throw new Error("Could not find user " + id + ". Error: " + err_3);
                     case 4: return [2 /*return*/];
+                }
+            });
+        });
+    };
+    UserStore.prototype.authenticate = function (userId, password) {
+        return __awaiter(this, void 0, void 0, function () {
+            var conn, sql, result, user, err_4;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        _a.trys.push([0, 3, , 4]);
+                        return [4 /*yield*/, database_1.default.connect()];
+                    case 1:
+                        conn = _a.sent();
+                        sql = 'SELECT password FROM users WHERE id = ($1)';
+                        return [4 /*yield*/, conn.query(sql, [userId])];
+                    case 2:
+                        result = _a.sent();
+                        console.log(password + pepper);
+                        if (result.rows.length > 0) {
+                            user = result.rows[0];
+                            console.log('User Found : ' + user);
+                            if (bcrypt_1.default.compareSync(password + pepper, user.password)) {
+                                console.log('return user');
+                                return [2 /*return*/, user];
+                            }
+                        }
+                        return [3 /*break*/, 4];
+                    case 3:
+                        err_4 = _a.sent();
+                        throw new Error("Authenticate Error: " + err_4);
+                    case 4:
+                        console.log('null user');
+                        return [2 /*return*/, null];
                 }
             });
         });

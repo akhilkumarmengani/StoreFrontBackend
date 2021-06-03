@@ -8,7 +8,7 @@ const {
   POSTGRES_DB,
   POSTGRES_USER,
   POSTGRES_PASSWORD,
-  POSTGRES_TEST_DB,
+  POSTGRES_DB_TEST,
   PORT,
   NODE_ENV,
 } = process.env
@@ -20,7 +20,7 @@ const client : Pool = new Pool({
     user: POSTGRES_USER,
     password: POSTGRES_PASSWORD,
     port : parseInt (PORT as string),
-    database: NODE_ENV === 'dev'? POSTGRES_DB:POSTGRES_TEST_DB
+    database: NODE_ENV === 'dev'? POSTGRES_DB:POSTGRES_DB_TEST
 })
 
 

@@ -3,7 +3,7 @@ import Client from '../database';
 type ProductRequest = { name: string, price : number , category : string };
 
 export type Product = {
-    id : number,
+    id? : number,
     name : string,
     price : number,
     category : string 
@@ -40,7 +40,7 @@ export class ProductStore{
         }
     }
 
-    async create(product : ProductRequest ): Promise<Product>{
+    async create(product : Product ): Promise<Product>{
         const sql = 'INSERT INTO products(name,price,category) VALUES($1,$2,$3) RETURNING *';
         try{
             const conn = await Client.connect();
@@ -52,4 +52,21 @@ export class ProductStore{
             throw new Error('CREATE Error - '+ err);
         }
     } 
+
+
+    async getProductsByCategory(category: string): Promise<Product[]> {
+        try {
+        const sql = 'SELECT * FROM products WHERE category=($1)'
+        // @ts-ignore
+        const conn = await Client.connect()
+    
+        const result = await conn.query(sql, [category])
+    
+        conn.release()
+    
+        return result.rows
+        } catch (err) {
+            throw new Error(`Could not find products with ${category}. Error: ${err}`)
+        }
+    }
 }

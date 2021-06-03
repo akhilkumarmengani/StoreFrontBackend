@@ -80,14 +80,14 @@ export class UserStore{
         try {
             const conn = await Client.connect()
             const sql = 'SELECT password FROM users WHERE id = ($1)'
-        
+
             const result = await conn.query(sql, [userId])
         
             console.log(password+pepper)
         
             if(result.rows.length > 0) {
         
-                const user = result.rows[0]
+                const user : User = result.rows[0]
         
                 console.log('User Found : ' + user)
             

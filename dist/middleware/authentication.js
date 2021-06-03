@@ -8,7 +8,10 @@ var verifyAuthToken = function (req, res, next) {
     try {
         var authorizationHeader = req.headers.authorization;
         var token = authorizationHeader.split(' ')[1];
+        console.log('auth token middleware - ' + token);
         var decoded = jsonwebtoken_1.default.verify(token, process.env.TOKEN_SECRET);
+        console.log('decoded middleware - ' + decoded);
+        res.locals.userData = decoded;
         next();
     }
     catch (error) {

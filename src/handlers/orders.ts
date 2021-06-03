@@ -1,10 +1,6 @@
 import express from 'express';
 import {Order, OrderStore} from '../models/order';
 import verifyAuthToken from '../middleware/authentication'
-import { appendFile } from 'fs/promises';
-
-type OrderRequest = {productId : number , quantity : number , userId : number, status : string }
-
 
 const store = new OrderStore();
 
@@ -14,7 +10,7 @@ const index = async (req : express.Request ,res : express.Response) => {
 };
 
 const create = async (req : express.Request ,res : express.Response) => {
-    const order : OrderRequest = {
+    const order : Order = {
         productId : parseInt(req.body.productId as string),
         quantity : parseInt(req.body.quantity as string),
         userId : parseInt(req.body.userId as string),
@@ -33,7 +29,7 @@ const show = async (req : express.Request ,res : express.Response) =>{
 }
 
 const update = async (req : express.Request ,res : express.Response) =>{
-    const order : OrderRequest = {
+    const order : Order = {
         productId : parseInt(req.body.productId as string),
         quantity : parseInt(req.body.quantity as string),
         userId : parseInt(req.body.userId as string),
@@ -65,8 +61,8 @@ const order_routes = ( app : express.Application) => {
     app.post('/orders',verifyAuthToken,create);
     app.get('/orders/:id',verifyAuthToken,show);
     app.put('/orders',verifyAuthToken,update);
-    app.get('/users/:user_id/current-orders',verifyAuthToken,currentOrders);
-    app.get('/users/:user_id/current-orders',verifyAuthToken,completedOrders);
+    app.get('/orders/users/:user_id',verifyAuthToken,currentOrders);
+    app.get('/orders/users/:id/orders-completed',verifyAuthToken,completedOrders);
 }
 
 export default order_routes;
