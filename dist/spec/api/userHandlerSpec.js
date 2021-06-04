@@ -44,52 +44,50 @@ var server_1 = __importDefault(require("../../src/server"));
 var user_1 = require("../../src/models/user");
 var token = process.env.TEST_TOKEN;
 var request = supertest_1.default(server_1.default);
-describe('Endpoint Testing', function () {
+describe('User Endpoint Testing', function () {
     beforeAll(function () {
         spyOn(user_1.UserStore.prototype, 'create').and.returnValue(Promise.resolve(token));
     });
-    describe('User Endpoint Testing', function () {
-        it('Get all users testing', function () { return __awaiter(void 0, void 0, void 0, function () {
-            var response;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0: return [4 /*yield*/, request
-                            .get('/users')
-                            .set('Authorization', 'Bearer ' + token)];
-                    case 1:
-                        response = _a.sent();
-                        expect(response.status).toBe(200);
-                        return [2 /*return*/];
-                }
-            });
-        }); });
-        it('Get User by Id', function () { return __awaiter(void 0, void 0, void 0, function () {
-            var response;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0: return [4 /*yield*/, request
-                            .get('/users/1')
-                            .set('Authorization', 'Bearer ' + token)];
-                    case 1:
-                        response = _a.sent();
-                        expect(response.status).toBe(200);
-                        return [2 /*return*/];
-                }
-            });
-        }); });
-        it('Create New User', function () { return __awaiter(void 0, void 0, void 0, function () {
-            var response;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0: return [4 /*yield*/, request
-                            .post('/users')
-                            .set('Authorization', 'Bearer ' + token)];
-                    case 1:
-                        response = _a.sent();
-                        expect(response.status).toBe(200);
-                        return [2 /*return*/];
-                }
-            });
-        }); });
-    });
+    it('Get all users testing', function () { return __awaiter(void 0, void 0, void 0, function () {
+        var response;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0: return [4 /*yield*/, request
+                        .get('/users')
+                        .set('Authorization', 'Bearer ' + token)];
+                case 1:
+                    response = _a.sent();
+                    expect(response.status).toBe(200);
+                    return [2 /*return*/];
+            }
+        });
+    }); });
+    it('Get User by Id', function () { return __awaiter(void 0, void 0, void 0, function () {
+        var response;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0: return [4 /*yield*/, request
+                        .get('/users/1')
+                        .set('Authorization', 'Bearer ' + token)];
+                case 1:
+                    response = _a.sent();
+                    expect(response.status).toBe(200);
+                    return [2 /*return*/];
+            }
+        });
+    }); });
+    it('Create New User', function () { return __awaiter(void 0, void 0, void 0, function () {
+        var response;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0: return [4 /*yield*/, request
+                        .post('/users')
+                        .set('Authorization', 'Bearer ' + token)];
+                case 1:
+                    response = _a.sent();
+                    expect(response.status).toBe(200);
+                    return [2 /*return*/];
+            }
+        });
+    }); });
 });

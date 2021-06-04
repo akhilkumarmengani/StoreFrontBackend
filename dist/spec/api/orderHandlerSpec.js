@@ -39,12 +39,13 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+/* eslint-disable no-undef */
 var supertest_1 = __importDefault(require("supertest"));
 var server_1 = __importDefault(require("../../src/server"));
 var order_1 = require("../../src/models/order");
 var token = process.env.TEST_TOKEN;
 var request = supertest_1.default(server_1.default);
-describe('Endpoint Testing', function () {
+describe('Order Endpoint Testing', function () {
     beforeAll(function () {
         spyOn(order_1.OrderStore.prototype, 'create').and.returnValue(Promise.resolve({
             id: 1,
@@ -54,48 +55,46 @@ describe('Endpoint Testing', function () {
             status: 'ACTIVE'
         }));
     });
-    describe('Order Endpoint Testing', function () {
-        it('Get all orders testing', function () { return __awaiter(void 0, void 0, void 0, function () {
-            var response;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0: return [4 /*yield*/, request
-                            .get('/orders')
-                            .set('Authorization', 'Bearer ' + token)];
-                    case 1:
-                        response = _a.sent();
-                        expect(response.status).toBe(200);
-                        return [2 /*return*/];
-                }
-            });
-        }); });
-        it('Get current orders for user', function () { return __awaiter(void 0, void 0, void 0, function () {
-            var response;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0: return [4 /*yield*/, request
-                            .get('/orders/users/1')
-                            .set('Authorization', 'Bearer ' + token)];
-                    case 1:
-                        response = _a.sent();
-                        expect(response.status).toBe(200);
-                        return [2 /*return*/];
-                }
-            });
-        }); });
-        it('Get current orders for user', function () { return __awaiter(void 0, void 0, void 0, function () {
-            var response;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0: return [4 /*yield*/, request
-                            .get('/orders/users/1/orders-completed')
-                            .set('Authorization', 'Bearer ' + token)];
-                    case 1:
-                        response = _a.sent();
-                        expect(response.status).toBe(200);
-                        return [2 /*return*/];
-                }
-            });
-        }); });
-    });
+    it('Get all orders testing', function () { return __awaiter(void 0, void 0, void 0, function () {
+        var response;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0: return [4 /*yield*/, request
+                        .get('/orders')
+                        .set('Authorization', 'Bearer ' + token)];
+                case 1:
+                    response = _a.sent();
+                    expect(response.status).toBe(200);
+                    return [2 /*return*/];
+            }
+        });
+    }); });
+    it('Get current orders for user', function () { return __awaiter(void 0, void 0, void 0, function () {
+        var response;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0: return [4 /*yield*/, request
+                        .get('/orders/users/1')
+                        .set('Authorization', 'Bearer ' + token)];
+                case 1:
+                    response = _a.sent();
+                    expect(response.status).toBe(200);
+                    return [2 /*return*/];
+            }
+        });
+    }); });
+    it('Get current orders for user', function () { return __awaiter(void 0, void 0, void 0, function () {
+        var response;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0: return [4 /*yield*/, request
+                        .get('/orders/users/1/orders-completed')
+                        .set('Authorization', 'Bearer ' + token)];
+                case 1:
+                    response = _a.sent();
+                    expect(response.status).toBe(200);
+                    return [2 /*return*/];
+            }
+        });
+    }); });
 });

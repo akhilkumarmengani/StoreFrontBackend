@@ -6,7 +6,7 @@ const token: string = process.env.TEST_TOKEN as string;
 
 const request = supertest(app);
 
-describe('Endpoint Testing', () => {
+describe('Order Endpoint Testing', () => {
   beforeAll(() => {
     spyOn(OrderStore.prototype, 'create').and.returnValue(
       Promise.resolve({
@@ -18,27 +18,24 @@ describe('Endpoint Testing', () => {
       })
     );
   });
+  it('Get all orders testing', async () => {
+    const response = await request
+      .get('/orders')
+      .set('Authorization', 'Bearer ' + token);
+    expect(response.status).toBe(200);
+  });
 
-  describe('Order Endpoint Testing', () => {
-    it('Get all orders testing', async () => {
-      const response = await request
-        .get('/orders')
-        .set('Authorization', 'Bearer ' + token);
-      expect(response.status).toBe(200);
-    });
+  it('Get current orders for user', async () => {
+    const response = await request
+      .get('/orders/users/1')
+      .set('Authorization', 'Bearer ' + token);
+    expect(response.status).toBe(200);
+  });
 
-    it('Get current orders for user', async () => {
-      const response = await request
-        .get('/orders/users/1')
-        .set('Authorization', 'Bearer ' + token);
-      expect(response.status).toBe(200);
-    });
-
-    it('Get current orders for user', async () => {
-      const response = await request
-        .get('/orders/users/1/orders-completed')
-        .set('Authorization', 'Bearer ' + token);
-      expect(response.status).toBe(200);
-    });
+  it('Get current orders for user', async () => {
+    const response = await request
+      .get('/orders/users/1/orders-completed')
+      .set('Authorization', 'Bearer ' + token);
+    expect(response.status).toBe(200);
   });
 });
