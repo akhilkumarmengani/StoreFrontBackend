@@ -5,8 +5,13 @@ import verifyAuthToken from '../middleware/authentication';
 const store = new ProductStore();
 
 const index = async (req: express.Request, res: express.Response) => {
-  const users = await store.index();
-  res.send(users);
+  try {
+    const users = await store.index();
+    res.json(users);
+  } catch (err) {
+    res.status(400);
+    res.json(err);
+  }
 };
 
 const create = async (req: express.Request, res: express.Response) => {
@@ -15,14 +20,24 @@ const create = async (req: express.Request, res: express.Response) => {
     price: parseInt(req.body.price as string),
     category: req.body.category as string
   };
-  const newProduct: Product = await store.create(product);
-  res.send(newProduct);
+  try {
+    const newProduct: Product = await store.create(product);
+    res.json(newProduct);
+  } catch (err) {
+    res.status(400);
+    res.json(err);
+  }
 };
 
 const show = async (req: express.Request, res: express.Response) => {
   const id: number = parseInt(req.params.id as string);
-  const user = await store.show(id);
-  res.send(user);
+  try {
+    const user = await store.show(id);
+    res.json(user);
+  } catch (err) {
+    res.status(400);
+    res.json(err);
+  }
 };
 
 const getProductsByCategory = async (
@@ -30,8 +45,13 @@ const getProductsByCategory = async (
   res: express.Response
 ) => {
   const category: string = req.params.category as string;
-  const user = await store.getProductsByCategory(category);
-  res.send(user);
+  try {
+    const user = await store.getProductsByCategory(category);
+    res.json(user);
+  } catch (err) {
+    res.status(400);
+    res.json(err);
+  }
 };
 
 const product_routes = (app: express.Application) => {

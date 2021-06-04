@@ -1,13 +1,4 @@
 import Client from '../database';
-import { Product, ProductStore } from './product';
-import { User, UserStore } from './user';
-
-type OrderRequest = {
-  productId: number;
-  quantity: number;
-  userId: number;
-  status: string;
-};
 
 export type Order = {
   id?: number;
@@ -30,7 +21,7 @@ export class OrderStore {
     }
   }
 
-  async create(order: OrderRequest): Promise<Order> {
+  async create(order: Order): Promise<Order> {
     const sql =
       'INSERT INTO orders(product_id,quantity,user_id,status) VALUES($1,$2,$3,$4) RETURNING *';
     try {
@@ -51,7 +42,6 @@ export class OrderStore {
   async show(userId: number): Promise<Order> {
     try {
       const sql = 'SELECT * FROM orders WHERE user_id=($1)';
-      // @ts-ignore
       const conn = await Client.connect();
 
       const result = await conn.query(sql, [userId]);
@@ -66,10 +56,9 @@ export class OrderStore {
     }
   }
 
-  async delete(id: number): Promise<User> {
+  async delete(id: number): Promise<Order> {
     try {
       const sql = 'DELETE orders WHERE id=($1) RETURNING *';
-      // @ts-ignore
       const conn = await Client.connect();
 
       const result = await conn.query(sql, [id]);
@@ -82,11 +71,10 @@ export class OrderStore {
     }
   }
 
-  async update(order: OrderRequest): Promise<Order> {
+  async update(order: Order): Promise<Order> {
     try {
       const sql =
         'UPDATE orders SET quantity = ($3), status = ($4) WHERE user_id=($1) and product_id = $(2)';
-      // @ts-ignore
       const conn = await Client.connect();
 
       const result = await conn.query(sql, [
@@ -110,7 +98,6 @@ export class OrderStore {
     try {
       const status = 'ACTIVE';
       const sql = 'SELECT * FROM orders WHERE user_id=($1) and status = ($2) ';
-      // @ts-ignore
       const conn = await Client.connect();
 
       const result = await conn.query(sql, [userId, status]);
@@ -129,7 +116,6 @@ export class OrderStore {
     try {
       const status = 'COMPLETE';
       const sql = 'SELECT * FROM orders WHERE user_id=($1) and status = ($2) ';
-      // @ts-ignore
       const conn = await Client.connect();
 
       const result = await conn.query(sql, [userId, status]);
@@ -140,6 +126,28 @@ export class OrderStore {
     } catch (err) {
       throw new Error(
         `Could not find orders for user id ${userId}. Error: ${err}`
+      );
+    }
+  }
+
+  async addProduct(
+    orderId: number,
+    productId: number,
+    quantity: number
+  ): Promise<Order> {
+    try {
+      const sql =
+        'INSERT INTO order_products(order_id,product_id,quantity) VALUES($1,$2,$3) RETURNING *';
+      const conn = await Client.connect();
+
+      const result = await conn.query(sql, [orderId, productId, quantity]);
+
+      conn.release();
+
+      return result.rows[0];
+    } catch (err) {
+      throw new Error(
+        `Could not add products for order id ${orderId}. Error: ${err}`
       );
     }
   }

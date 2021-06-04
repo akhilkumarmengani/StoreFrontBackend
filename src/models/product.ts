@@ -1,7 +1,5 @@
 import Client from '../database';
 
-type ProductRequest = { name: string; price: number; category: string };
-
 export type Product = {
   id?: number;
   name: string;
@@ -25,7 +23,6 @@ export class ProductStore {
   async show(id: number): Promise<Product> {
     try {
       const sql = 'SELECT * FROM products WHERE id=($1)';
-      // @ts-ignore
       const conn = await Client.connect();
 
       const result = await conn.query(sql, [id]);
@@ -41,7 +38,6 @@ export class ProductStore {
   async delete(id: number): Promise<Product> {
     try {
       const sql = 'DELETE products WHERE id=($1) RETURNING *';
-      // @ts-ignore
       const conn = await Client.connect();
 
       const result = await conn.query(sql, [id]);
@@ -74,7 +70,6 @@ export class ProductStore {
   async getProductsByCategory(category: string): Promise<Product[]> {
     try {
       const sql = 'SELECT * FROM products WHERE category=($1)';
-      // @ts-ignore
       const conn = await Client.connect();
 
       const result = await conn.query(sql, [category]);

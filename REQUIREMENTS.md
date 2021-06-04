@@ -42,5 +42,10 @@ Table: Users (id:primary key, firstName:varchar, lastName:varchar , password:str
 - status of order (active or complete)
 Table: Orders (id:primary key, product_id:number[foreign key to products table], quantity:number , user_id:number [foreign key to users table], status: varchar)
 
+#### Orders-Products table
+- id
+- id of each product in the order
+- order_id
+
 
 

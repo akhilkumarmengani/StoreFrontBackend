@@ -1,10 +1,6 @@
 import Client from '../database';
-import { ProductStore } from './product';
 import bcrypt from 'bcrypt';
-import { QueryResult } from 'pg';
 import jwt from 'jsonwebtoken';
-
-type UserRequest = { firstName: string; lastName: string; password: string };
 
 const saltRounds: string = process.env.SALT_ROUNDS as string;
 const pepper: string = process.env.BCRYPT_PASSWORD as string;
@@ -23,7 +19,6 @@ export class UserStore {
   async index(): Promise<User[]> {
     const sql = 'SELECT * FROM users';
     try {
-      // @ts-ignore
       const conn = await Client.connect();
       const result = await conn.query(sql);
       conn.release();
@@ -47,7 +42,6 @@ export class UserStore {
         user.lastName,
         hash
       ]);
-      const newUser = result.rows[0];
       conn.release();
 
       const userId: number = result.rows[0].id;
@@ -62,7 +56,6 @@ export class UserStore {
   async show(id: number): Promise<User> {
     try {
       const sql = 'SELECT * FROM users WHERE id=($1)';
-      // @ts-ignore
       const conn = await Client.connect();
 
       const result = await conn.query(sql, [id]);
@@ -78,7 +71,6 @@ export class UserStore {
   async delete(id: number): Promise<User> {
     try {
       const sql = 'DELETE users WHERE id=($1) RETURNING *';
-      // @ts-ignore
       const conn = await Client.connect();
 
       const result = await conn.query(sql, [id]);

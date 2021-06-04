@@ -1,6 +1,3 @@
-import UserHandler from '../handlers/users';
-import ProductHandler from '../handlers/products';
-import OrderHandler from '../handlers/orders';
 import supertest from 'supertest';
 import app from '../server';
 import { UserStore } from '../models/user';
