@@ -37,8 +37,27 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var order_1 = require("../../src/models/order");
+var product_1 = require("../../src/models/product");
+var user_1 = require("../../src/models/user");
+var userStore = new user_1.UserStore();
+var productStore = new product_1.ProductStore();
 var orderStore = new order_1.OrderStore();
 describe('Order Model Test', function () {
+    beforeAll(function () {
+        var user = {
+            firstName: 'Dhoni',
+            lastName: 'Mahendra',
+            password: 'CSK'
+        };
+        userStore.create(user);
+        var product = {
+            name: 'Air pods',
+            price: 100,
+            category: 'music'
+        };
+        productStore.create(product);
+        console.log('Before All');
+    });
     beforeEach(function () {
         jasmine.DEFAULT_TIMEOUT_INTERVAL = 10000;
     });
@@ -62,7 +81,7 @@ describe('Order Model Test', function () {
                         productId: 1,
                         userId: 1,
                         quantity: 10,
-                        status: 'COMPLETE'
+                        status: 'ACTIVE'
                     })];
                 case 1:
                     result = _a.sent();

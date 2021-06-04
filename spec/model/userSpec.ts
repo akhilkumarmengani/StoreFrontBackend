@@ -3,6 +3,15 @@ import { User, UserStore } from '../../src/models/user';
 const userStore: UserStore = new UserStore();
 
 describe('User Model Test', () => {
+  beforeAll(async () => {
+    const user: User = {
+      firstName: 'Jadeja',
+      lastName: 'Ravindra',
+      password: 'CSK123'
+    };
+    await userStore.create(user);
+    console.log('Before All');
+  }, 10000);
   beforeEach(function () {
     jasmine.DEFAULT_TIMEOUT_INTERVAL = 10000;
   });

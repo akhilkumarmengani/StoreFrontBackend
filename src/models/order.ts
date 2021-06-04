@@ -39,19 +39,19 @@ export class OrderStore {
     }
   }
 
-  async show(userId: number): Promise<Order> {
+  async show(orderId: number): Promise<Order> {
     try {
-      const sql = 'SELECT * FROM orders WHERE user_id=($1)';
+      const sql = 'SELECT * FROM orders WHERE id=($1)';
       const conn = await Client.connect();
 
-      const result = await conn.query(sql, [userId]);
+      const result = await conn.query(sql, [orderId]);
 
       conn.release();
 
       return result.rows[0];
     } catch (err) {
       throw new Error(
-        `Could not find orders for user id ${userId}. Error: ${err}`
+        `Could not find orders for orderId id ${orderId}. Error: ${err}`
       );
     }
   }
@@ -96,11 +96,10 @@ export class OrderStore {
 
   async currentOrders(userId: number): Promise<Order[]> {
     try {
-      const status = 'ACTIVE';
       const sql = 'SELECT * FROM orders WHERE user_id=($1) and status = ($2) ';
       const conn = await Client.connect();
 
-      const result = await conn.query(sql, [userId, status]);
+      const result = await conn.query(sql, [userId, 'ACTIVE']);
 
       conn.release();
 

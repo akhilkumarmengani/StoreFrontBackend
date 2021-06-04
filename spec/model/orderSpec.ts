@@ -1,8 +1,27 @@
 import { Order, OrderStore } from '../../src/models/order';
+import { Product, ProductStore } from '../../src/models/product';
+import { User, UserStore } from '../../src/models/user';
 
+const userStore: UserStore = new UserStore();
+const productStore: ProductStore = new ProductStore();
 const orderStore: OrderStore = new OrderStore();
 
 describe('Order Model Test', () => {
+  beforeAll(() => {
+    const user: User = {
+      firstName: 'Dhoni',
+      lastName: 'Mahendra',
+      password: 'CSK'
+    };
+    userStore.create(user);
+    const product: Product = {
+      name: 'Air pods',
+      price: 100,
+      category: 'music'
+    };
+    productStore.create(product);
+    console.log('Before All');
+  });
   beforeEach(function () {
     jasmine.DEFAULT_TIMEOUT_INTERVAL = 10000;
   });
@@ -27,7 +46,7 @@ describe('Order Model Test', () => {
       productId: 1,
       userId: 1,
       quantity: 10,
-      status: 'COMPLETE'
+      status: 'ACTIVE'
     });
     expect(result).toBeDefined();
   });

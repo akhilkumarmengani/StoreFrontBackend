@@ -39,6 +39,24 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var user_1 = require("../../src/models/user");
 var userStore = new user_1.UserStore();
 describe('User Model Test', function () {
+    beforeAll(function () { return __awaiter(void 0, void 0, void 0, function () {
+        var user;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0:
+                    user = {
+                        firstName: 'Jadeja',
+                        lastName: 'Ravindra',
+                        password: 'CSK123'
+                    };
+                    return [4 /*yield*/, userStore.create(user)];
+                case 1:
+                    _a.sent();
+                    console.log('Before All');
+                    return [2 /*return*/];
+            }
+        });
+    }); }, 10000);
     beforeEach(function () {
         jasmine.DEFAULT_TIMEOUT_INTERVAL = 10000;
     });

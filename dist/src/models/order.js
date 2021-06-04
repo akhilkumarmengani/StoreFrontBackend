@@ -101,25 +101,25 @@ var OrderStore = /** @class */ (function () {
             });
         });
     };
-    OrderStore.prototype.show = function (userId) {
+    OrderStore.prototype.show = function (orderId) {
         return __awaiter(this, void 0, void 0, function () {
             var sql, conn, result, err_3;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
                         _a.trys.push([0, 3, , 4]);
-                        sql = 'SELECT * FROM orders WHERE user_id=($1)';
+                        sql = 'SELECT * FROM orders WHERE id=($1)';
                         return [4 /*yield*/, database_1.default.connect()];
                     case 1:
                         conn = _a.sent();
-                        return [4 /*yield*/, conn.query(sql, [userId])];
+                        return [4 /*yield*/, conn.query(sql, [orderId])];
                     case 2:
                         result = _a.sent();
                         conn.release();
                         return [2 /*return*/, result.rows[0]];
                     case 3:
                         err_3 = _a.sent();
-                        throw new Error("Could not find orders for user id " + userId + ". Error: " + err_3);
+                        throw new Error("Could not find orders for orderId id " + orderId + ". Error: " + err_3);
                     case 4: return [2 /*return*/];
                 }
             });
@@ -180,17 +180,16 @@ var OrderStore = /** @class */ (function () {
     };
     OrderStore.prototype.currentOrders = function (userId) {
         return __awaiter(this, void 0, void 0, function () {
-            var status_1, sql, conn, result, err_6;
+            var sql, conn, result, err_6;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
                         _a.trys.push([0, 3, , 4]);
-                        status_1 = 'ACTIVE';
                         sql = 'SELECT * FROM orders WHERE user_id=($1) and status = ($2) ';
                         return [4 /*yield*/, database_1.default.connect()];
                     case 1:
                         conn = _a.sent();
-                        return [4 /*yield*/, conn.query(sql, [userId, status_1])];
+                        return [4 /*yield*/, conn.query(sql, [userId, 'ACTIVE'])];
                     case 2:
                         result = _a.sent();
                         conn.release();
@@ -205,17 +204,17 @@ var OrderStore = /** @class */ (function () {
     };
     OrderStore.prototype.completedOrders = function (userId) {
         return __awaiter(this, void 0, void 0, function () {
-            var status_2, sql, conn, result, err_7;
+            var status_1, sql, conn, result, err_7;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
                         _a.trys.push([0, 3, , 4]);
-                        status_2 = 'COMPLETE';
+                        status_1 = 'COMPLETE';
                         sql = 'SELECT * FROM orders WHERE user_id=($1) and status = ($2) ';
                         return [4 /*yield*/, database_1.default.connect()];
                     case 1:
                         conn = _a.sent();
-                        return [4 /*yield*/, conn.query(sql, [userId, status_2])];
+                        return [4 /*yield*/, conn.query(sql, [userId, status_1])];
                     case 2:
                         result = _a.sent();
                         conn.release();
