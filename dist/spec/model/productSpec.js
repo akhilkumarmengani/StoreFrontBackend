@@ -83,15 +83,13 @@ describe('Product Model Test', function () {
         });
     }); });
     it('Retrieving Product By Id Test', function () { return __awaiter(void 0, void 0, void 0, function () {
-        var productId, product;
+        var product;
         return __generator(this, function (_a) {
             switch (_a.label) {
-                case 0:
-                    productId = 1;
-                    return [4 /*yield*/, productStore.show(productId)];
+                case 0: return [4 /*yield*/, productStore.show(1)];
                 case 1:
                     product = _a.sent();
-                    expect(product.id).toEqual(productId);
+                    expect(product.id).toEqual(1);
                     return [2 /*return*/];
             }
         });

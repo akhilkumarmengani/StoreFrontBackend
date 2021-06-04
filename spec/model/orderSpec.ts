@@ -33,14 +33,12 @@ describe('Order Model Test', () => {
   });
 
   it('Show current orders', async () => {
-    const userId = 1;
-    const result: Order[] = await orderStore.currentOrders(userId);
-    expect(result[0].status).toEqual('ACTIVE');
+    const result: Order[] = await orderStore.currentOrders(1);
+    expect(result[0].status as string).toEqual('ACTIVE');
   });
 
   it('Retrieving Order By Id Test', async () => {
-    const orderId = 1;
-    const order: Order = await orderStore.show(orderId);
-    expect(order.id).toEqual(orderId);
+    const order: Order = await orderStore.show(1);
+    expect(order.id as number).toEqual(1);
   });
 });

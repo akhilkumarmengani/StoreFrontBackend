@@ -33,12 +33,11 @@ describe('Product Model Test', () => {
 
   it('Show all products', async () => {
     const result: Product[] = await productStore.index();
-    expect(result[0].id).toEqual(1);
+    expect(result[0].id as number).toEqual(1);
   });
 
   it('Retrieving Product By Id Test', async () => {
-    const productId = 1;
-    const product: Product = await productStore.show(productId);
-    expect(product.id).toEqual(productId);
+    const product: Product = await productStore.show(1);
+    expect(product.id as number).toEqual(1);
   });
 });

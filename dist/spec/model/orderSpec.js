@@ -72,12 +72,10 @@ describe('Order Model Test', function () {
         });
     }); });
     it('Show current orders', function () { return __awaiter(void 0, void 0, void 0, function () {
-        var userId, result;
+        var result;
         return __generator(this, function (_a) {
             switch (_a.label) {
-                case 0:
-                    userId = 1;
-                    return [4 /*yield*/, orderStore.currentOrders(userId)];
+                case 0: return [4 /*yield*/, orderStore.currentOrders(1)];
                 case 1:
                     result = _a.sent();
                     expect(result[0].status).toEqual('ACTIVE');
@@ -86,15 +84,13 @@ describe('Order Model Test', function () {
         });
     }); });
     it('Retrieving Order By Id Test', function () { return __awaiter(void 0, void 0, void 0, function () {
-        var orderId, order;
+        var order;
         return __generator(this, function (_a) {
             switch (_a.label) {
-                case 0:
-                    orderId = 1;
-                    return [4 /*yield*/, orderStore.show(orderId)];
+                case 0: return [4 /*yield*/, orderStore.show(1)];
                 case 1:
                     order = _a.sent();
-                    expect(order.id).toEqual(orderId);
+                    expect(order.id).toEqual(1);
                     return [2 /*return*/];
             }
         });

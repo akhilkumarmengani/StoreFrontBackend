@@ -34,12 +34,11 @@ describe('User Model Test', () => {
 
   it('Show all users', async () => {
     const result: User[] = await userStore.index();
-    expect(result[0].id).toEqual(1);
+    expect(result[0].id as number).toEqual(1);
   });
 
   it('Retrieving User By Id Test', async () => {
-    const userId = 1;
-    const result: User = await userStore.show(userId);
-    expect(result.id).toEqual(userId);
+    const result: User = await userStore.show(1);
+    expect(result.id as number).toEqual(1);
   });
 });

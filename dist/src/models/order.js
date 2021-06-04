@@ -243,7 +243,7 @@ var OrderStore = /** @class */ (function () {
                     case 2:
                         result = _a.sent();
                         conn.release();
-                        return [2 /*return*/, result.rows];
+                        return [2 /*return*/, result.rows[0]];
                     case 3:
                         err_8 = _a.sent();
                         throw new Error("Could not add products for order id " + orderId + ". Error: " + err_8);

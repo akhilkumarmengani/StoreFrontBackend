@@ -85,15 +85,13 @@ describe('User Model Test', function () {
         });
     }); });
     it('Retrieving User By Id Test', function () { return __awaiter(void 0, void 0, void 0, function () {
-        var userId, result;
+        var result;
         return __generator(this, function (_a) {
             switch (_a.label) {
-                case 0:
-                    userId = 1;
-                    return [4 /*yield*/, userStore.show(userId)];
+                case 0: return [4 /*yield*/, userStore.show(1)];
                 case 1:
                     result = _a.sent();
-                    expect(result.id).toEqual(userId);
+                    expect(result.id).toEqual(1);
                     return [2 /*return*/];
             }
         });
