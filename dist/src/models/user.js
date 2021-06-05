@@ -101,7 +101,6 @@ var UserStore = /** @class */ (function () {
                         conn.release();
                         userId = result.rows[0].id;
                         authToken = generateAuthToken(userId.toString());
-                        console.log(authToken);
                         return [2 /*return*/, authToken];
                     case 4:
                         err_2 = _a.sent();

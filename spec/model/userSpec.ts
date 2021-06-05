@@ -3,7 +3,7 @@ import { User, UserStore } from '../../src/models/user';
 const userStore: UserStore = new UserStore();
 
 describe('User Model Testing', () => {
-  beforeAll(async (done): Promise<void> => {
+  beforeAll(async function () {
     spyOn(UserStore.prototype, 'index').and.returnValue(
       Promise.resolve([
         {
@@ -23,13 +23,6 @@ describe('User Model Testing', () => {
         password: 'CSK673'
       })
     );
-    console.log('Creating User');
-    await userStore.create({
-      firstName: 'kevin',
-      lastName: 'eyong',
-      password: 'thisismeenow2020#'
-    });
-    done();
   });
   it('Get All Users Test', () => {
     expect(userStore.index).toBeDefined();
@@ -47,7 +40,7 @@ describe('User Model Testing', () => {
     expect(userStore.delete).toBeDefined();
   });
 
-  it('Creating User Test', async (done) => {
+  it('Creating User Test', async () => {
     const userDetails = {
       firstName: 'Akhil',
       lastName: 'Mengani',
@@ -55,14 +48,11 @@ describe('User Model Testing', () => {
     };
     const result = await userStore.create(userDetails);
     expect(result).toBeDefined();
-    done();
   });
 
-  it('Show all users', async (done) => {
+  it('Show all users', async () => {
     const result: User[] = await userStore.index();
-    console.log(result[0].id);
     expect(result[0].id as number).toEqual(1);
-    done();
   });
 
   it('Retrieving User By Id Test', async () => {

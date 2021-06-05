@@ -46,7 +46,6 @@ export class UserStore {
 
       const userId: number = result.rows[0].id;
       const authToken: string = generateAuthToken(userId.toString());
-      console.log(authToken);
       return authToken;
     } catch (err) {
       throw new Error('CREATE Error - ' + err);

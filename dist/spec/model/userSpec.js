@@ -39,37 +39,27 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var user_1 = require("../../src/models/user");
 var userStore = new user_1.UserStore();
 describe('User Model Testing', function () {
-    beforeAll(function (done) { return __awaiter(void 0, void 0, void 0, function () {
-        return __generator(this, function (_a) {
-            switch (_a.label) {
-                case 0:
-                    spyOn(user_1.UserStore.prototype, 'index').and.returnValue(Promise.resolve([
-                        {
-                            id: 1,
-                            firstName: 'Ravindra',
-                            lastName: 'Jadeja',
-                            password: 'CSK123'
-                        }
-                    ]));
-                    spyOn(user_1.UserStore.prototype, 'show').and.returnValue(Promise.resolve({
+    beforeAll(function () {
+        return __awaiter(this, void 0, void 0, function () {
+            return __generator(this, function (_a) {
+                spyOn(user_1.UserStore.prototype, 'index').and.returnValue(Promise.resolve([
+                    {
                         id: 1,
-                        firstName: 'Suresh',
-                        lastName: 'Raina',
-                        password: 'CSK673'
-                    }));
-                    console.log('Creating User');
-                    return [4 /*yield*/, userStore.create({
-                            firstName: 'kevin',
-                            lastName: 'eyong',
-                            password: 'thisismeenow2020#'
-                        })];
-                case 1:
-                    _a.sent();
-                    done();
-                    return [2 /*return*/];
-            }
+                        firstName: 'Ravindra',
+                        lastName: 'Jadeja',
+                        password: 'CSK123'
+                    }
+                ]));
+                spyOn(user_1.UserStore.prototype, 'show').and.returnValue(Promise.resolve({
+                    id: 1,
+                    firstName: 'Suresh',
+                    lastName: 'Raina',
+                    password: 'CSK673'
+                }));
+                return [2 /*return*/];
+            });
         });
-    }); });
+    });
     it('Get All Users Test', function () {
         expect(userStore.index).toBeDefined();
     });
@@ -82,7 +72,7 @@ describe('User Model Testing', function () {
     it('Delete User Test', function () {
         expect(userStore.delete).toBeDefined();
     });
-    it('Creating User Test', function (done) { return __awaiter(void 0, void 0, void 0, function () {
+    it('Creating User Test', function () { return __awaiter(void 0, void 0, void 0, function () {
         var userDetails, result;
         return __generator(this, function (_a) {
             switch (_a.label) {
@@ -96,21 +86,18 @@ describe('User Model Testing', function () {
                 case 1:
                     result = _a.sent();
                     expect(result).toBeDefined();
-                    done();
                     return [2 /*return*/];
             }
         });
     }); });
-    it('Show all users', function (done) { return __awaiter(void 0, void 0, void 0, function () {
+    it('Show all users', function () { return __awaiter(void 0, void 0, void 0, function () {
         var result;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0: return [4 /*yield*/, userStore.index()];
                 case 1:
                     result = _a.sent();
-                    console.log(result[0].id);
                     expect(result[0].id).toEqual(1);
-                    done();
                     return [2 /*return*/];
             }
         });

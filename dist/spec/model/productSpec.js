@@ -39,6 +39,22 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var product_1 = require("../../src/models/product");
 var productStore = new product_1.ProductStore();
 describe('Product Model Test', function () {
+    beforeAll(function () {
+        spyOn(product_1.ProductStore.prototype, 'index').and.returnValue(Promise.resolve([
+            {
+                id: 1,
+                name: 'Cricket Bat',
+                price: 100,
+                category: 'Sports'
+            }
+        ]));
+        spyOn(product_1.ProductStore.prototype, 'show').and.returnValue(Promise.resolve({
+            id: 1,
+            name: 'Gloves',
+            price: 10,
+            category: 'Sports'
+        }));
+    });
     beforeEach(function () {
         jasmine.DEFAULT_TIMEOUT_INTERVAL = 10000;
     });
@@ -89,7 +105,12 @@ describe('Product Model Test', function () {
                 case 0: return [4 /*yield*/, productStore.show(1)];
                 case 1:
                     product = _a.sent();
-                    expect(product.id).toEqual(1);
+                    expect(product).toEqual({
+                        id: 1,
+                        name: 'Gloves',
+                        price: 10,
+                        category: 'Sports'
+                    });
                     return [2 /*return*/];
             }
         });
