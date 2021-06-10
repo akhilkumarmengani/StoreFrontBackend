@@ -1,0 +1,26 @@
+version: 2.1
+orbs:
+  node: circleci/node@4.1.0
+jobs:
+  build:
+    docker:
+      - image: "cimg/base:stable"
+    steps:
+      - node/install
+      - checkout
+      - run:
+          name: NPM Install
+          command: |
+            npm install
+      - run:
+          name: API Build
+          command: |
+            npm run build
+      - run:
+          name: API Test
+          command: |
+            npm run test
+      - run:
+          name: Done
+          command: |
+           echo "Build and Test Done" 

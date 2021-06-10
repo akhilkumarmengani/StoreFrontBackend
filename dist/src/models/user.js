@@ -41,10 +41,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.UserStore = void 0;
 var database_1 = __importDefault(require("../database"));
-var bcrypt_1 = __importDefault(require("bcrypt"));
+//import bcrypt from 'bcrypt';
 var jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
-var saltRounds = process.env.SALT_ROUNDS;
-var pepper = process.env.BCRYPT_PASSWORD;
 var generateAuthToken = function (id) {
     return jsonwebtoken_1.default.sign(id, process.env.TOKEN_SECRET);
 };
@@ -79,7 +77,7 @@ var UserStore = /** @class */ (function () {
     };
     UserStore.prototype.create = function (user) {
         return __awaiter(this, void 0, void 0, function () {
-            var sql, conn, hash, result, userId, authToken, err_2;
+            var sql, conn, result, userId, authToken, err_2;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -90,11 +88,10 @@ var UserStore = /** @class */ (function () {
                         return [4 /*yield*/, database_1.default.connect()];
                     case 2:
                         conn = _a.sent();
-                        hash = bcrypt_1.default.hashSync(user.password + pepper, parseInt(saltRounds));
                         return [4 /*yield*/, conn.query(sql, [
                                 user.firstName,
                                 user.lastName,
-                                hash
+                                user.password
                             ])];
                     case 3:
                         result = _a.sent();
@@ -174,7 +171,8 @@ var UserStore = /** @class */ (function () {
                         result = _a.sent();
                         if (result.rows.length > 0) {
                             user = result.rows[0];
-                            if (bcrypt_1.default.compareSync(password + pepper, user.password)) {
+                            //if (bcrypt.compareSync(password + pepper, user.password)) {
+                            if (user.password === password) {
                                 return [2 /*return*/, user];
                             }
                         }

@@ -1,9 +1,9 @@
 import Client from '../database';
-import bcrypt from 'bcrypt';
+//import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 
-const saltRounds: string = process.env.SALT_ROUNDS as string;
-const pepper: string = process.env.BCRYPT_PASSWORD as string;
+// const saltRounds: string = process.env.SALT_ROUNDS as string;
+// const pepper: string = process.env.BCRYPT_PASSWORD as string;
 
 export type User = {
   id?: number;
@@ -33,14 +33,14 @@ export class UserStore {
       'INSERT INTO users(firstName,lastName,password) VALUES($1,$2,$3) RETURNING *';
     try {
       const conn = await Client.connect();
-      const hash = bcrypt.hashSync(
-        user.password + pepper,
-        parseInt(saltRounds)
-      );
+      // const hash = bcrypt.hashSync(
+      //   user.password + pepper,
+      //   parseInt(saltRounds)
+      // );
       const result = await conn.query(sql, [
         user.firstName,
         user.lastName,
-        hash
+        user.password
       ]);
       conn.release();
 
@@ -92,7 +92,8 @@ export class UserStore {
       if (result.rows.length > 0) {
         const user: User = result.rows[0];
 
-        if (bcrypt.compareSync(password + pepper, user.password)) {
+        //if (bcrypt.compareSync(password + pepper, user.password)) {
+        if (user.password === password) {
           return user;
         }
       }
