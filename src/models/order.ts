@@ -1,4 +1,4 @@
-import Client from '../database';
+import client from '../database';
 
 export type Order = {
   id?: number;
@@ -12,7 +12,7 @@ export class OrderStore {
   async index(): Promise<Order[]> {
     const sql = 'SELECT * FROM orders';
     try {
-      const conn = await Client.connect();
+      const conn = await client.connect();
       const result = await conn.query(sql);
       conn.release();
       return result.rows;
@@ -25,7 +25,7 @@ export class OrderStore {
     const sql =
       'INSERT INTO orders(product_id,quantity,user_id,status) VALUES($1,$2,$3,$4) RETURNING *';
     try {
-      const conn = await Client.connect();
+      const conn = await client.connect();
       const result = await conn.query(sql, [
         order.productId,
         order.quantity,
@@ -42,7 +42,7 @@ export class OrderStore {
   async show(orderId: number): Promise<Order> {
     try {
       const sql = 'SELECT * FROM orders WHERE id=($1)';
-      const conn = await Client.connect();
+      const conn = await client.connect();
 
       const result = await conn.query(sql, [orderId]);
 
@@ -59,7 +59,7 @@ export class OrderStore {
   async delete(id: number): Promise<Order> {
     try {
       const sql = 'DELETE orders WHERE id=($1) RETURNING *';
-      const conn = await Client.connect();
+      const conn = await client.connect();
 
       const result = await conn.query(sql, [id]);
 
@@ -75,7 +75,7 @@ export class OrderStore {
     try {
       const sql =
         'UPDATE orders SET quantity = ($3), status = ($4) WHERE user_id=($1) and product_id = $(2)';
-      const conn = await Client.connect();
+      const conn = await client.connect();
 
       const result = await conn.query(sql, [
         order.userId,

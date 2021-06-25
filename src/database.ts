@@ -23,4 +23,4 @@ const client: Pool = new Pool({
   database: NODE_ENV === 'dev' ? POSTGRES_DB : POSTGRES_DB_TEST
 });
 
-export default client;
+export default client;  

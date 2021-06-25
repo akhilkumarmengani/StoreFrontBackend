@@ -20,6 +20,9 @@ $ npm i express jasmine jasmine-spec-reporter bcrypt db-migrate db-migrate-pg do
 
 ## Database Setup
 
+- Cross check the environment variables correctly when creating Pool object.
+- Note down the db and credential details and add them in the .env
+
 ### Create User 
 ```
 CREATE USER admin WITH PASSWORD 'Akhil123';
@@ -50,6 +53,9 @@ GRANT ALL PRIVILEGES ON DATABASE storefront_test TO admin;
 ```
 
 ### Migrate Up Databases
+Install the db-migrate library globally on your system to run the command.
+npm would otherwise include the binaries and packages in the ```node_modules``` directory
+
 Dev
 ```
 db-migrate up --config database.json -e dev
